@@ -12,8 +12,9 @@ const PORT = process.env.PORT;
 
 app.use(json({ limit: "1MB" }));
 app.use(cookieParser());
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://react-ec.onrender.com'], // include your deployed frontend URL
+  origin: ['http://localhost:5173', 'https://66ed98e29ba64e0ed894679f--animated-marshmallow-a661b9.netlify.app'], // Add the correct Netlify URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
