@@ -4,23 +4,23 @@ const userSchema = mongoose.Schema({
     userName: {
         type: String,
         required: true,
-        trim: true // Removes any leading/trailing whitespace
+        trim: true 
     },
     email: {
         type: String,
         required: true,
-        unique: true, // Ensures that each email is unique
-        trim: true,   // Removes any leading/trailing whitespace
-        lowercase: true // Converts the email to lowercase
+        unique: true, 
+        trim: true,   
+        lowercase: true 
     },
     password: {
         type: String,
         required: true,
-        minlength: 6 // Ensures a minimum length for the password
+        minlength: 6 
     },
     profileImage: {
         type: String,
-        default: "" // Optional, sets a default value
+        default: "" 
     },
     role: {
         type: Number,

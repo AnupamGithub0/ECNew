@@ -17,6 +17,7 @@ import {getOrdersByOwner } from '../controllers/getOrders.js'
 import { ProductStatus } from '../controllers/admin/ProductStatus.js'
 import { updateProductStatus } from '../controllers/admin/updateProductStatus.js'
 import { google } from '../controllers/google.js'
+import { recommendedProduct } from '../controllers/product/recommended.js'
 
 const route = express.Router()
 
@@ -56,6 +57,11 @@ route.post("/updateStatus",isAdmin,jwtVerify,updateProductStatus)
 
 //google auth
 route.post("/google",google)
+
+//recommended products
+route.post("/recommended",recommendedProduct)
+
+
 
 
 export default route

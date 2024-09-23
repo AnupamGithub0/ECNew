@@ -7,7 +7,6 @@ export const signup = async (req, res) => {
   try {
     const { profileImage, userName, email, password } = req.body;
 
-    // Validate required fields
     if (!userName || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -15,7 +14,7 @@ export const signup = async (req, res) => {
       });
     }
 
-    // Validate email format (basic validation)
+    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
@@ -40,10 +39,11 @@ export const signup = async (req, res) => {
     // Create new user
     const user = await User.create({
       profileImage,
-      userName,
-      email,
+      userName: userName.replace(/\s+/g, ''),
+      email:email.toLowerCase(),
       password: hash,
     });
+    await user.save()
 
     // Respond with success
     return res.status(201).json({
@@ -53,9 +53,6 @@ export const signup = async (req, res) => {
     });
 
   } catch (error) {
-    // Log error for debugging purposes
-    console.error("Signup error:", error);
-
     return res.status(500).json({
       success: false,
       message: "An error occurred while signing up",
@@ -82,7 +79,7 @@ export const signin = async (req, res) => {
     if (!existsUser) {
       return res.json({
         success: false,
-        message: "The user does not exists ! ",
+        message: "The user does not exists! ",
       });
     }
 
@@ -104,7 +101,7 @@ export const signin = async (req, res) => {
         { expiresIn: refreshTokenExpiry }
       );
       res.cookie("accessToken", accessToken, {
-        maxAge: 600000,
+        maxAge: 30000,
         httpOnly: true,
         secure: true,
         sameSite: "None"
@@ -118,20 +115,20 @@ export const signin = async (req, res) => {
 
       return res.json({
         success: true,
-        message: "Successfully Login !",
+        message: "Successfully signed in!",
         data: user,
         accessToken:accessToken
       });
     } else {
       return res.json({
         success: false,
-        message: "password not match ",
+        message: "Passwords do not match!",
       });
     }
   } catch (error) {
     return res.json({
       success: false,
-      message: "Error while signin ",
+      message: "Error while signin!",
     });
   }
 };
